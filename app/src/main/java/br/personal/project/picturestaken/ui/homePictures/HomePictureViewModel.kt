@@ -15,7 +15,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     private val _responsePhotos = MutableLiveData<ResponsePicture>()
 
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
-    private val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
+    val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
     fun findPictureByName(name: String) {
         viewModelScope.launch {

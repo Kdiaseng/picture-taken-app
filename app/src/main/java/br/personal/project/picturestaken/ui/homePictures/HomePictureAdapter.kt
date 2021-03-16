@@ -5,12 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.ItemPhotoBinding
+import com.squareup.picasso.Picasso
 
 class HomePictureAdapter(
     private val pictures: MutableList<Picture>
 ) : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(private val binding: ItemPhotoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(picture: Picture) {
+            Picasso.get()
+                .load(picture.src.medium)
+                .into(binding.imagePhoto)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,7 +28,7 @@ class HomePictureAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val picture = pictures[position]
-//        holder.binding.imagePhoto.setImageResource(picture.)
+        holder.bind(picture)
     }
 
     override fun getItemCount() = pictures.size

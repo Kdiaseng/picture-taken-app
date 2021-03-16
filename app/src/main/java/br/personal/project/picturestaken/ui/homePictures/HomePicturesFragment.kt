@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.personal.project.picturestaken.R
@@ -39,17 +40,22 @@ class HomePicturesFragment : Fragment() {
             inflater,
             container,
             false
-        )        // Inflate the layout for this fragment
+        )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
-        val repository = PictureRepository()
-        GlobalScope.launch {
-            repository.findPictureByName("people")
-        }
+        viewModel.findPictureByName("people")
+
+        viewModel.photosLiveData.observe(viewLifecycleOwner, {
+            val adapter = HomePictureAdapter(it)
+            binding.recyclerPhotos.adapter = adapter
+            binding.recyclerPhotos.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        })
+
     }
 
 
