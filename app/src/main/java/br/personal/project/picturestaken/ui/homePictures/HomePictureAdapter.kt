@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.ItemPhotoBinding
-import com.squareup.picasso.Picasso
 
 class HomePictureAdapter(
     private val pictures: MutableList<Picture>
@@ -14,9 +13,7 @@ class HomePictureAdapter(
     class ViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(picture: Picture) {
-            Picasso.get()
-                .load(picture.src.medium)
-                .into(binding.imagePhoto)
+            binding.picture = picture
         }
     }
 

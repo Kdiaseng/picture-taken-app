@@ -47,7 +47,7 @@ class HomePicturesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
-        viewModel.findPictureByName("people")
+        viewModel.findPictureByName("ocean")
 
         viewModel.photosLiveData.observe(viewLifecycleOwner, {
             val adapter = HomePictureAdapter(it)

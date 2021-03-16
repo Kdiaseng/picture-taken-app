@@ -3,11 +3,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="picture"
+            type="br.personal.project.picturestaken.data.model.Picture" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imagePhoto"
@@ -15,10 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
+            app:error="@{@drawable/ic_launcher_background}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="12dp" />
+            app:riv_corner_radius="12dp"
+            app:url="@{picture.src.medium}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
