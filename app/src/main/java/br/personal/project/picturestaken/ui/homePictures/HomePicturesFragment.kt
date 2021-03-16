@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.personal.project.picturestaken.R
 import br.personal.project.picturestaken.data.model.Picture
@@ -23,6 +24,12 @@ class HomePicturesFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentHomePicturesBinding
+
+    val viewModel by lazy {
+        ViewModelProvider(
+            this, HomePicturesViewModelFactory(PictureRepository())
+        ).get(HomePictureViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +88,7 @@ class HomePicturesFragment : Fragment() {
                 }
             }
             else -> {
-                
+
             }
         }
     }

@@ -2,18 +2,20 @@ package br.personal.project.picturestaken.repository
 
 import br.personal.project.picturestaken.api.RetrofitConfig
 import br.personal.project.picturestaken.api.service.PictureService
+import br.personal.project.picturestaken.data.ResultData
 import java.lang.Exception
 
 class PictureRepository(private val pictureService: PictureService = RetrofitConfig.retrofitService) {
 
-    suspend fun findPictureByName(name: String) {
+    suspend fun findPictureByName(name: String) =
         try {
             val response = pictureService.getPictures(name)
-            if (response.isSuccessful) {
-
+            if (response.isSuccessful && response.body() != null) {
+                ResultData.Success(response.body()!!)
+            } else {
+                ResultData.Error("FAIL GET PICTURES")
             }
         } catch (ex: Exception) {
-
+            ResultData.Error("FAIL", ex)
         }
-    }
 }

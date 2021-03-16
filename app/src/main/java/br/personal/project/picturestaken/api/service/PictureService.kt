@@ -1,6 +1,5 @@
 package br.personal.project.picturestaken.api.service
 
-import android.graphics.Picture
 import br.personal.project.picturestaken.data.model.ResponsePicture
 import retrofit2.Response
 import retrofit2.http.GET
