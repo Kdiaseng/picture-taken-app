@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
-import br.personal.project.picturestaken.repository.PictureRepository
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomePicturesFragment : Fragment() {
@@ -22,11 +21,7 @@ class HomePicturesFragment : Fragment() {
         HomePictureAdapter()
     }
 
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this, HomePicturesViewModelFactory(PictureRepository())
-        ).get(HomePictureViewModel::class.java)
-    }
+    private val viewModel: HomePictureViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +40,7 @@ class HomePicturesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapterPicture.setOnclick(this::showName)
         listener()
-//        viewModel.findPictureByName("car")
+        viewModel.findPictureByName("car")
 
         viewModel.photosLiveData.observe(viewLifecycleOwner, {
             it.let(adapterPicture::addPictures)
