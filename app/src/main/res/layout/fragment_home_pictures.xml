@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
             name="viewModelPicture"
             type="br.personal.project.picturestaken.ui.homePictures.HomePictureViewModel" />
 
@@ -18,36 +22,37 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white_one"
         tools:context=".ui.homePictures.HomePicturesFragment">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:elevation="20dp"
             android:layout_width="match_parent"
             android:layout_height="128dp"
+            android:elevation="20dp"
             app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
-                android:elevation="0dp"
                 android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
                 app:menu="@menu/top_app_bar"
                 app:title="Picture Taken" />
 
             <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:cardElevation="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                app:cardElevation="15dp">
 
                 <androidx.appcompat.widget.SearchView
-                    app:queryHint="@string/search_label"
-                    android:imeOptions="actionSearch"
-                    android:background="@android:color/transparent"
+                    android:id="@+id/search_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:imeOptions="actionSearch"
+                    app:queryHint="@string/search_label" />
             </com.google.android.material.card.MaterialCardView>
 
 
@@ -66,6 +71,19 @@
                 tools:listitem="@layout/item_photo" />
 
         </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progress_load"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="@{viewModelPicture.showProgressLiveData?view.VISIBLE : view.GONE}" />
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
