@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +27,11 @@ class HomePicturesFragment : Fragment() {
 
     private lateinit var binding: FragmentHomePicturesBinding
 
-    val viewModel by lazy {
+    private val adapterPicture by lazy {
+        HomePictureAdapter()
+    }
+
+    private val viewModel by lazy {
         ViewModelProvider(
             this, HomePicturesViewModelFactory(PictureRepository())
         ).get(HomePictureViewModel::class.java)
@@ -41,21 +46,26 @@ class HomePicturesFragment : Fragment() {
             container,
             false
         )
+        binding.adapterPhoto = adapterPicture
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
-        viewModel.findPictureByName("ocean")
+
+        adapterPicture.setOnclick(this::showName)
+
+        viewModel.findPictureByName("car")
 
         viewModel.photosLiveData.observe(viewLifecycleOwner, {
-            val adapter = HomePictureAdapter(it)
-            binding.recyclerPhotos.adapter = adapter
-            binding.recyclerPhotos.layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            it.let(adapterPicture::addPictures)
         })
 
+    }
+
+    private fun showName(picture: Picture) {
+        Toast.makeText(requireContext(), picture.photographer, Toast.LENGTH_SHORT).show()
     }
 
 
