@@ -15,20 +15,58 @@
             type="br.personal.project.picturestaken.ui.homePictures.HomePictureAdapter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.homePictures.HomePicturesFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_photos"
+        <com.google.android.material.appbar.AppBarLayout
+            android:elevation="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:elevation="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/top_app_bar"
+                app:title="Picture Taken" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardElevation="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.SearchView
+                    app:queryHint="@string/search_label"
+                    android:imeOptions="actionSearch"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:adapter="@{adapterPhoto}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-           tools:listitem="@layout/item_photo" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_photos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:adapter="@{adapterPhoto}"
+                tools:listitem="@layout/item_photo" />
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

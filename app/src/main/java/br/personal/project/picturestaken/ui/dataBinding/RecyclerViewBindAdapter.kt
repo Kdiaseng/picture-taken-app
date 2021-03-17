@@ -7,7 +7,7 @@ import br.personal.project.picturestaken.ui.homePictures.HomePictureAdapter
 
 @BindingAdapter("adapter")
 fun RecyclerView.loadList(
-    adapterPhoto: HomePictureAdapter,
+    adapterPhoto: RecyclerView.Adapter<*>,
 ) {
     adapter = adapterPhoto
     layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

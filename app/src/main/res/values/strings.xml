@@ -2,4 +2,7 @@
     <string name="app_name">PicturesTaken</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Pesquisar</string>
+    <string name="content_description_search">busca por imagens</string>
+    <string name="search_label">Pesquisar...</string>
 </resources>
