@@ -2,9 +2,14 @@ package br.personal.project.picturestaken.ui.homePictures
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.ItemPhotoBinding
+import br.personal.project.picturestaken.ui.dataBinding.setUrl
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>() {
 

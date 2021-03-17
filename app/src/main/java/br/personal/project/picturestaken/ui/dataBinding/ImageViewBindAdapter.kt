@@ -14,10 +14,3 @@ fun ImageView.setUrl(url: String, error: Drawable) {
         .error(error)
         .into(this)
 }
-
-//@BindingAdapter("android:visibility")
-//fun View.setVisibility(value: Boolean) {
-//    this.visibility = if (value) View.VISIBLE else View.GONE
-//}
-
-

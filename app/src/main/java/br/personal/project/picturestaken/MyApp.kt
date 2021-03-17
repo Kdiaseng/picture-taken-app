@@ -1,6 +1,7 @@
 package br.personal.project.picturestaken
 
 import android.app.Application
+import br.personal.project.picturestaken.di.adapter
 import br.personal.project.picturestaken.di.mainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -17,7 +18,7 @@ class MyApp : Application (){
             androidLogger()
             androidContext(this@MyApp)
 
-            modules(mainModule)
+            modules(listOf(mainModule, adapter))
         }
     }
 }

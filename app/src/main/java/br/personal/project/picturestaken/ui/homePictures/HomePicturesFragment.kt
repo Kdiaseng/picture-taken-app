@@ -11,16 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomePicturesFragment : Fragment() {
     private lateinit var binding: FragmentHomePicturesBinding
-
-    private val adapterPicture by lazy {
-        HomePictureAdapter()
-    }
-
+    private val adapterPicture: HomePictureAdapter by inject()
     private val viewModel: HomePictureViewModel by viewModel()
 
     override fun onCreateView(
@@ -38,26 +35,36 @@ class HomePicturesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterPicture.setOnclick(this::showName)
-        listener()
+        setupListener()
+        setupObserver()
+
         viewModel.findPictureByName("car")
-
-        viewModel.photosLiveData.observe(viewLifecycleOwner, {
-            it.let(adapterPicture::addPictures)
-        })
-
     }
 
-    private fun listener() {
+    private fun setupObserver() {
+        viewModel.photosLiveData.observe(viewLifecycleOwner, {
+            it.run(adapterPicture::addPictures)
+        })
+
+        viewModel.visibleLoading.observe(viewLifecycleOwner, { showLoading ->
+            showLoading.run(this::setVisibilityLoading)
+        })
+    }
+
+    private fun setupListener() {
+        adapterPicture.setOnclick(this::showName)
         binding.searchImage.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let(viewModel::findPictureByName)
                 keyBoardHide()
                 return true
             }
-
             override fun onQueryTextChange(newText: String?) = false
         })
+    }
+
+    private fun setVisibilityLoading(showLoading: Boolean) {
+        binding.animationViewLoading.visibility = if (showLoading) View.VISIBLE else View.GONE
     }
 
     private fun showName(picture: Picture) {
