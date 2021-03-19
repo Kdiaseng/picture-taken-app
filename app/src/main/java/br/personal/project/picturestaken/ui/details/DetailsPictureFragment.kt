@@ -52,13 +52,17 @@ class DetailsPictureFragment : Fragment() {
             Picasso.get()
                 .load(args.pictureDetails.src.landscape)
                 .fit().centerCrop()
-                .into(this, object : Callback {
-                    override fun onSuccess() {
-                        detailsViewModel.setShowProgress(false)
-                    }
-                    override fun onError(e: Exception?) {}
+                .into(this, loadedImageCallback())
+        }
+    }
 
-                })
+    private fun loadedImageCallback() = object : Callback {
+        override fun onSuccess() {
+            detailsViewModel.setShowProgress(false)
+        }
+
+        override fun onError(e: Exception?) {
+            TODO("Not yet implemented")
         }
     }
 

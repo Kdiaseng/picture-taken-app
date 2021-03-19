@@ -26,11 +26,7 @@ class HomePicturesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomePicturesBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        binding = FragmentHomePicturesBinding.inflate(inflater, container, false)
         with(binding) {
             lifecycleOwner = this@HomePicturesFragment
             viewModelPicture = viewModel

@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="br.personal.project.picturestaken.ui.details.DetailsPictureViewModel" />
@@ -19,9 +21,10 @@
             android:id="@+id/progress_image_details"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:visibility="@{viewModel.showProcess ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/image_details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/image_details"
+            app:layout_constraintStart_toStartOf="@+id/image_details"
             app:layout_constraintTop_toTopOf="@+id/image_details" />
 
 

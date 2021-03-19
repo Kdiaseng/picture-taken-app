@@ -10,7 +10,7 @@ class DetailsPictureViewModel : ViewModel() {
     private val _pictureSelected = MutableLiveData<Picture>()
     val pictureSelected: LiveData<Picture> = _pictureSelected
 
-    private val _showProgress = MutableLiveData(false)
+    private val _showProgress = MutableLiveData(true)
     val showProcess: LiveData<Boolean> = _showProgress
 
     fun setPicture(picture: Picture) {
