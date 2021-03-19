@@ -16,6 +16,8 @@ class DetailsPictureFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsPictureBinding
     private val args: DetailsPictureFragmentArgs by navArgs()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
@@ -32,8 +34,10 @@ class DetailsPictureFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uri = args.uri
+        val uri = args.pictureDetails.src.medium
 
+        binding.textViewAuthor.text = args.pictureDetails.photographer
+        binding.textViewAuthorUrl.text = args.pictureDetails.photographer_url
         binding.imageDetails.apply {
             transitionName = uri
             Picasso.get()

@@ -75,7 +75,7 @@ class HomePicturesFragment : Fragment() {
         val extras = FragmentNavigatorExtras(imageView to picture.src.medium)
         val action =
             HomePicturesFragmentDirections.actionHomePicturesFragmentToDetailsPictureFragment(
-                picture.src.medium
+                picture
             )
         findNavController().navigate(action, extras)
     }

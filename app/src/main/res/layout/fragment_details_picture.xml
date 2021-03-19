@@ -19,24 +19,23 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView_author"
             style="?attr/textAppearanceHeadline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Kaleb Dias"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_details" />
 
         <TextView
             style="?attr/textAppearanceCaption"
+            android:id="@+id/textView_author_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="kaledias.oficial@gmail.com"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_author" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

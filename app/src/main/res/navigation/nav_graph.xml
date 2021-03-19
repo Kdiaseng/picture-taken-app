@@ -21,9 +21,8 @@
         android:label="fragment_details_picture"
         tools:layout="@layout/fragment_details_picture" >
         <argument
-            android:name="uri"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="null" />
+            android:name="pictureDetails"
+            app:argType="br.personal.project.picturestaken.data.model.Picture"
+          />
     </fragment>
 </navigation>
