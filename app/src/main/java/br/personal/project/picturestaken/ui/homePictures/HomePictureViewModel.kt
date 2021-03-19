@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class HomePictureViewModel(private val repository: PictureRepository) : ViewModel() {
 
-    private val _visibleLoading = MutableLiveData<Boolean>(true)
+    private val _visibleLoading = MutableLiveData<Boolean>(false)
     val visibleLoading: LiveData<Boolean> = _visibleLoading
 
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
@@ -31,4 +31,21 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
             }
         }
     }
+
+    fun getPicturesCurated(perPage: Int = 15) {
+        viewModelScope.launch {
+            _visibleLoading.value = true
+            when (val response = repository.getPictureCurated(perPage)) {
+                is ResultData.Success -> {
+                    _visibleLoading.value = false
+                    _photosLiveData.value = response.data.photos
+                }
+                is ResultData.Error -> {
+                    _visibleLoading.value = false
+                }
+            }
+        }
+    }
+
+
 }

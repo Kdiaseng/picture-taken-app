@@ -18,4 +18,17 @@ class PictureRepository(private val pictureService: PictureService = RetrofitCon
         } catch (ex: Exception) {
             ResultData.Error("FAIL", ex)
         }
+
+    suspend fun getPictureCurated(page: Int) =
+        try {
+            val response = pictureService.getPicturesCurated(page)
+            if(response.isSuccessful && response.body() != null){
+                ResultData.Success(response.body()!!)
+            }else{
+                ResultData.Error("FAIL GET PICTURES")
+            }
+
+        }catch (ex: Exception){
+            ResultData.Error("FAIL")
+        }
 }

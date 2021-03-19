@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
 import org.koin.android.ext.android.inject
@@ -38,7 +41,7 @@ class HomePicturesFragment : Fragment() {
         setupListener()
         setupObserver()
 
-        viewModel.findPictureByName("car")
+//        viewModel.getPicturesCurated()
     }
 
     private fun setupObserver() {
@@ -59,6 +62,7 @@ class HomePicturesFragment : Fragment() {
                 keyBoardHide()
                 return true
             }
+
             override fun onQueryTextChange(newText: String?) = false
         })
     }
@@ -67,8 +71,13 @@ class HomePicturesFragment : Fragment() {
         binding.animationViewLoading.visibility = if (showLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showName(picture: Picture) {
-        Toast.makeText(requireContext(), picture.photographer, Toast.LENGTH_SHORT).show()
+    private fun showName(picture: Picture, imageView: ImageView) {
+        val extras = FragmentNavigatorExtras(imageView to picture.src.medium)
+        val action =
+            HomePicturesFragmentDirections.actionHomePicturesFragmentToDetailsPictureFragment(
+                picture.src.medium
+            )
+        findNavController().navigate(action, extras)
     }
 
     private fun keyBoardHide() {

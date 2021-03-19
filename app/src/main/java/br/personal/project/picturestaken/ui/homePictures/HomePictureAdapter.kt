@@ -14,14 +14,14 @@ import java.lang.Exception
 class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>() {
 
     private var pictures = mutableListOf<Picture>()
-    private var onClick: ((Picture) -> Unit)? = null
+    private var onClick: ((Picture, ImageView) -> Unit)? = null
 
     fun addPictures(photos: MutableList<Picture>) {
         pictures = photos
         notifyDataSetChanged()
     }
 
-    fun setOnclick(action: (Picture) -> Unit){
+    fun setOnclick(action: (Picture, ImageView) -> Unit){
         onClick = action
     }
 
@@ -41,7 +41,7 @@ class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val picture = pictures[position]
         holder.binding.imagePhoto.setOnClickListener {
-            onClick?.invoke(picture)
+            onClick?.invoke(picture,holder.binding.imagePhoto)
         }
         holder.bind(picture)
     }

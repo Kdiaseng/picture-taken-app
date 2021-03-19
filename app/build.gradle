@@ -57,11 +57,15 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //Serialize
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0'
+    
+
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
     //Koin
-    def koin_version= "3.0.1-beta-1"
+    def koin_version = "3.0.1-beta-1"
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-android-ext:$koin_version"
     implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"

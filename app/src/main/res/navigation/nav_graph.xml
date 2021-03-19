@@ -9,5 +9,21 @@
         android:id="@+id/homePicturesFragment"
         android:name="br.personal.project.picturestaken.ui.homePictures.HomePicturesFragment"
         android:label="fragment_home_pictures"
-        tools:layout="@layout/fragment_home_pictures" />
+        tools:layout="@layout/fragment_home_pictures" >
+        <action
+            android:id="@+id/action_homePicturesFragment_to_detailsPictureFragment"
+            app:destination="@id/detailsPictureFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsPictureFragment"
+        android:name="br.personal.project.picturestaken.ui.details.DetailsPictureFragment"
+        android:label="fragment_details_picture"
+        tools:layout="@layout/fragment_details_picture" >
+        <argument
+            android:name="uri"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </fragment>
 </navigation>
