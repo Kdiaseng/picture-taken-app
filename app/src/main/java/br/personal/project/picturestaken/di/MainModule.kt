@@ -1,6 +1,7 @@
 package br.personal.project.picturestaken.di
 
 import br.personal.project.picturestaken.repository.PictureRepository
+import br.personal.project.picturestaken.ui.details.DetailsPictureViewModel
 import br.personal.project.picturestaken.ui.homePictures.HomePictureAdapter
 import br.personal.project.picturestaken.ui.homePictures.HomePictureViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -10,6 +11,10 @@ val mainModule = module {
 
     factory {
         PictureRepository()
+    }
+
+    viewModel {
+        DetailsPictureViewModel()
     }
     //single para usar em varias features
 

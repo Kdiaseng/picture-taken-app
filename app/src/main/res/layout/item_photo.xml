@@ -20,7 +20,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:src="@drawable/ic_camera_64"
             android:id="@+id/imagePhoto"
-            android:transitionName="@{picture.src.medium}"
+            android:transitionName="@{picture.src.large}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:riv_corner_radius="10dp"
-            app:url="@{picture.src.medium}" />
+            app:url="@{picture.src.large}" />
 
         <TextView
             android:layout_width="wrap_content"

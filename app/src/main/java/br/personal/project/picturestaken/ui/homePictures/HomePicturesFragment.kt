@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -32,7 +31,11 @@ class HomePicturesFragment : Fragment() {
             container,
             false
         )
-        binding.adapterPhoto = adapterPicture
+        with(binding) {
+            lifecycleOwner = this@HomePicturesFragment
+            viewModelPicture = viewModel
+            adapterPhoto = adapterPicture
+        }
         return binding.root
     }
 
@@ -40,17 +43,12 @@ class HomePicturesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListener()
         setupObserver()
-
 //        viewModel.getPicturesCurated()
     }
 
     private fun setupObserver() {
         viewModel.photosLiveData.observe(viewLifecycleOwner, {
             it.run(adapterPicture::addPictures)
-        })
-
-        viewModel.visibleLoading.observe(viewLifecycleOwner, { showLoading ->
-            showLoading.run(this::setVisibilityLoading)
         })
     }
 
@@ -67,12 +65,8 @@ class HomePicturesFragment : Fragment() {
         })
     }
 
-    private fun setVisibilityLoading(showLoading: Boolean) {
-        binding.animationViewLoading.visibility = if (showLoading) View.VISIBLE else View.GONE
-    }
-
     private fun showName(picture: Picture, imageView: ImageView) {
-        val extras = FragmentNavigatorExtras(imageView to picture.src.medium)
+        val extras = FragmentNavigatorExtras(imageView to picture.src.large)
         val action =
             HomePicturesFragmentDirections.actionHomePicturesFragmentToDetailsPictureFragment(
                 picture

@@ -5,17 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import br.personal.project.picturestaken.R
 import br.personal.project.picturestaken.databinding.FragmentDetailsPictureBinding
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class DetailsPictureFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsPictureBinding
     private val args: DetailsPictureFragmentArgs by navArgs()
+    private val detailsViewModel: DetailsPictureViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,23 +31,35 @@ class DetailsPictureFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailsPictureBinding.inflate(inflater, container, false)
+
+        binding.apply {
+            lifecycleOwner = this@DetailsPictureFragment
+            viewModel = detailsViewModel
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uri = args.pictureDetails.src.medium
+        val pictureDetails = args.pictureDetails
+        detailsViewModel.setPicture(pictureDetails)
+        loadImageDetails(pictureDetails.src.large)
+    }
 
-        binding.textViewAuthor.text = args.pictureDetails.photographer
-        binding.textViewAuthorUrl.text = args.pictureDetails.photographer_url
+    private fun loadImageDetails(uri: String) {
         binding.imageDetails.apply {
             transitionName = uri
             Picasso.get()
-                .load(uri)
-                .into(this)
+                .load(args.pictureDetails.src.landscape)
+                .fit().centerCrop()
+                .into(this, object : Callback {
+                    override fun onSuccess() {
+                        detailsViewModel.setShowProgress(false)
+                    }
+                    override fun onError(e: Exception?) {}
+
+                })
         }
-
-
     }
 
 
