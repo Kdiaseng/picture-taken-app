@@ -10,7 +10,10 @@ interface PictureService {
 
     @Headers("Authorization:563492ad6f9170000100000114b5e4e1f9d34599ae2294562006338f")
     @GET("search")
-    suspend fun getPictures(@Query("query") query: String = "ocean"): Response<ResponsePicture>
+    suspend fun getPictures(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): Response<ResponsePicture>
 
     @Headers("Authorization:563492ad6f9170000100000114b5e4e1f9d34599ae2294562006338f")
     @GET("curated")

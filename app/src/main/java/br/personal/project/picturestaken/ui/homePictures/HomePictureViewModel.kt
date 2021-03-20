@@ -6,22 +6,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.personal.project.picturestaken.data.ResultData
 import br.personal.project.picturestaken.data.model.Picture
+import br.personal.project.picturestaken.data.model.ResponsePicture
 import br.personal.project.picturestaken.repository.PictureRepository
 import kotlinx.coroutines.launch
 
 class HomePictureViewModel(private val repository: PictureRepository) : ViewModel() {
 
-    private val _visibleLoading = MutableLiveData<Boolean>(false)
+    private val _responsePicture = MutableLiveData<ResponsePicture>()
+    private val _totalPage = MutableLiveData(0)
+
+    private val _visibleLoading = MutableLiveData(false)
     val visibleLoading: LiveData<Boolean> = _visibleLoading
 
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
     val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
-    fun findPictureByName(name: String) {
+    fun findPictureByName(name: String, page: Int = 1) {
         viewModelScope.launch {
             _visibleLoading.value = true
-            when (val response = repository.findPictureByName(name)) {
+            when (val response = repository.findPictureByName(name, page)) {
                 is ResultData.Success -> {
+                    _responsePicture.value = response.data
                     _visibleLoading.value = false
                     _photosLiveData.value = response.data.photos
                 }
@@ -31,6 +36,17 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
             }
         }
     }
+
+
+    fun refreshPictures(name: String) {
+        _responsePicture.value?.let {response ->
+            response.next_page?.let {
+              val nextPage = response.page + 1
+                findPictureByName(name, nextPage)
+          }
+        }
+    }
+
 
     fun getPicturesCurated(perPage: Int = 15) {
         viewModelScope.launch {

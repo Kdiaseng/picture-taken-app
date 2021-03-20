@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -56,9 +57,12 @@ class HomePicturesFragment : Fragment() {
                 keyBoardHide()
                 return true
             }
-
             override fun onQueryTextChange(newText: String?) = false
         })
+
+        binding.swipePictures.setOnRefreshListener {
+
+        }
     }
 
     private fun showName(picture: Picture, imageView: ImageView) {
