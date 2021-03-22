@@ -18,9 +18,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white_one"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white_one">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -71,7 +71,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_photos"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:adapter="@{adapterPhoto}"
                 tools:listitem="@layout/item_photo" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

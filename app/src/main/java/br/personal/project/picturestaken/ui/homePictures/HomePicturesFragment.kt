@@ -2,6 +2,7 @@ package br.personal.project.picturestaken.ui.homePictures
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,17 +52,22 @@ class HomePicturesFragment : Fragment() {
 
     private fun setupListener() {
         adapterPicture.setOnclick(this::showName)
+
         binding.searchImage.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let(viewModel::findPictureByName)
+               viewModel.findPictureByName()
                 keyBoardHide()
                 return true
             }
-            override fun onQueryTextChange(newText: String?) = false
+            override fun onQueryTextChange(newText: String?) : Boolean{
+                viewModel.setQuery(newText)
+                return false
+            }
         })
 
         binding.swipePictures.setOnRefreshListener {
-
+            viewModel.refreshPictures()
+            binding.swipePictures.isRefreshing = false
         }
     }
 

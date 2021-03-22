@@ -15,38 +15,50 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     private val _responsePicture = MutableLiveData<ResponsePicture>()
     private val _totalPage = MutableLiveData(0)
 
+    private val _queryLiveData = MutableLiveData<String?>(null)
+
     private val _visibleLoading = MutableLiveData(false)
     val visibleLoading: LiveData<Boolean> = _visibleLoading
 
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
     val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
-    fun findPictureByName(name: String, page: Int = 1) {
-        viewModelScope.launch {
-            _visibleLoading.value = true
-            when (val response = repository.findPictureByName(name, page)) {
-                is ResultData.Success -> {
-                    _responsePicture.value = response.data
-                    _visibleLoading.value = false
-                    _photosLiveData.value = response.data.photos
-                }
-                is ResultData.Error -> {
-                    _visibleLoading.value = false
+    fun findPictureByName(page: Int = 1, isRefresh: Boolean = false) {
+        _queryLiveData.value?.let { query ->
+            viewModelScope.launch {
+                _visibleLoading.value = true
+                when (val response = repository.findPictureByName(query, page)) {
+                    is ResultData.Success -> {
+                        _visibleLoading.value = false
+                        _responsePicture.value = response.data
+                        if (isRefresh) {
+                            _photosLiveData.value?.addAll(response.data.photos)
+                        } else {
+                            _photosLiveData.value = response.data.photos
+                        }
+                    }
+                    is ResultData.Error -> {
+                        _visibleLoading.value = false
+                    }
                 }
             }
         }
     }
 
 
-    fun refreshPictures(name: String) {
-        _responsePicture.value?.let {response ->
+    fun refreshPictures() {
+        _responsePicture.value?.let { response ->
             response.next_page?.let {
-              val nextPage = response.page + 1
-                findPictureByName(name, nextPage)
-          }
+                val nextPage = response.page + 1
+                findPictureByName(nextPage,true)
+            }
         }
     }
 
+
+    fun setQuery(queryString: String?) {
+        _queryLiveData.value = queryString
+    }
 
     fun getPicturesCurated(perPage: Int = 15) {
         viewModelScope.launch {
@@ -62,6 +74,4 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
             }
         }
     }
-
-
 }
