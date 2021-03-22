@@ -2,18 +2,17 @@ package br.personal.project.picturestaken.ui.homePictures
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import br.personal.project.picturestaken.BR.adapterPhoto
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
 import org.koin.android.ext.android.inject
@@ -22,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomePicturesFragment : Fragment() {
     private lateinit var binding: FragmentHomePicturesBinding
-    private lateinit var adapterPicture: HomePictureAdapter
+    private val adapterPicture: HomePictureAdapter by inject ()
     private val viewModel: HomePictureViewModel by viewModel()
 
     override fun onCreateView(
