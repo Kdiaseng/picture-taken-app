@@ -23,7 +23,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
     val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
-    fun findPictureByName(page: Int = 1, isRefresh: Boolean = false) {
+    fun findPictureByName(page: Int = 1) {
         _queryLiveData.value?.let { query ->
             viewModelScope.launch {
                 _visibleLoading.value = true
@@ -31,11 +31,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                     is ResultData.Success -> {
                         _visibleLoading.value = false
                         _responsePicture.value = response.data
-                        if (isRefresh) {
-                            _photosLiveData.value?.addAll(response.data.photos)
-                        } else {
-                            _photosLiveData.value = response.data.photos
-                        }
+                        _photosLiveData.value = response.data.photos
                     }
                     is ResultData.Error -> {
                         _visibleLoading.value = false
@@ -50,7 +46,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
         _responsePicture.value?.let { response ->
             response.next_page?.let {
                 val nextPage = response.page + 1
-                findPictureByName(nextPage,true)
+                findPictureByName(nextPage)
             }
         }
     }

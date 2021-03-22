@@ -21,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomePicturesFragment : Fragment() {
     private lateinit var binding: FragmentHomePicturesBinding
-    private val adapterPicture: HomePictureAdapter by inject ()
+    private val adapterPicture: HomePictureAdapter by inject()
     private val viewModel: HomePictureViewModel by viewModel()
 
     override fun onCreateView(
@@ -41,7 +41,7 @@ class HomePicturesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupListener()
         setupObserver()
-//        viewModel.getPicturesCurated()
+        viewModel.getPicturesCurated()
     }
 
     private fun setupObserver() {
@@ -64,6 +64,7 @@ class HomePicturesFragment : Fragment() {
 
         binding.searchImage.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                adapterPicture.clear()
                 viewModel.findPictureByName()
                 keyBoardHide()
                 return true

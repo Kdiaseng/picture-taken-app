@@ -17,12 +17,20 @@ class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>()
     private var onClick: ((Picture, ImageView) -> Unit)? = null
 
     fun addPictures(photos: MutableList<Picture>) {
-        pictures = photos
+        if (pictures.size > 0) {
+            pictures.addAll(photos)
+        } else
+            pictures = photos
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        pictures.clear()
         notifyDataSetChanged()
     }
 
 
-    fun setOnclick(action: (Picture, ImageView) -> Unit){
+    fun setOnclick(action: (Picture, ImageView) -> Unit) {
         onClick = action
     }
 
@@ -42,7 +50,7 @@ class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val picture = pictures[position]
         holder.binding.imagePhoto.setOnClickListener {
-            onClick?.invoke(picture,holder.binding.imagePhoto)
+            onClick?.invoke(picture, holder.binding.imagePhoto)
         }
         holder.bind(picture)
     }
