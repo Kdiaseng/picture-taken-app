@@ -21,6 +21,7 @@ class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>()
         notifyDataSetChanged()
     }
 
+
     fun setOnclick(action: (Picture, ImageView) -> Unit){
         onClick = action
     }

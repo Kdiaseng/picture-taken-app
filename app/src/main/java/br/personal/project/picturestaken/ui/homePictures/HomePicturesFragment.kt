@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
 import org.koin.android.ext.android.inject
@@ -21,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomePicturesFragment : Fragment() {
     private lateinit var binding: FragmentHomePicturesBinding
-    private val adapterPicture: HomePictureAdapter by inject()
+    private lateinit var adapterPicture: HomePictureAdapter
     private val viewModel: HomePictureViewModel by viewModel()
 
     override fun onCreateView(
@@ -53,22 +54,27 @@ class HomePicturesFragment : Fragment() {
     private fun setupListener() {
         adapterPicture.setOnclick(this::showName)
 
+        binding.recyclerPhotos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.recyclerPhotos.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    viewModel.refreshPictures()
+                }
+            }
+        })
+
         binding.searchImage.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-               viewModel.findPictureByName()
+                viewModel.findPictureByName()
                 keyBoardHide()
                 return true
             }
-            override fun onQueryTextChange(newText: String?) : Boolean{
+
+            override fun onQueryTextChange(newText: String?): Boolean {
                 viewModel.setQuery(newText)
                 return false
             }
         })
-
-        binding.swipePictures.setOnRefreshListener {
-            viewModel.refreshPictures()
-            binding.swipePictures.isRefreshing = false
-        }
     }
 
     private fun showName(picture: Picture, imageView: ImageView) {
