@@ -1,5 +1,6 @@
 package br.personal.project.picturestaken.ui.details
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,11 +48,13 @@ class DetailsPictureFragment : Fragment() {
     }
 
     private fun loadImageDetails(uri: String) {
+
+        binding.cardImageDetails.setCardBackgroundColor(Color.parseColor(args.pictureDetails.avg_color))
         binding.imageDetails.apply {
             transitionName = uri
             Picasso.get()
                 .load(args.pictureDetails.src.landscape)
-                .fit().centerCrop()
+                .fit()
                 .into(this, loadedImageCallback())
         }
     }

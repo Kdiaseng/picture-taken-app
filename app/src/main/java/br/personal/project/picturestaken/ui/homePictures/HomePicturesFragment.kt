@@ -2,7 +2,6 @@ package br.personal.project.picturestaken.ui.homePictures
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +47,12 @@ class HomePicturesFragment : Fragment() {
         setStateBottomSheet(BottomSheetBehavior.STATE_HIDDEN)
         setupListener()
         setupObserver()
-        viewModel.getPicturesCurated()
+
+        if(!adapterPicture.hasItem()){
+            adapterPicture.clear()
+            viewModel.getPicturesCurated()
+        }
+
     }
 
     private fun setupObserver() {

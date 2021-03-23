@@ -10,7 +10,7 @@ class Picture(
     val photographer: String,
     val photographer_url: String,
     val photographer_id: Long,
-    val avg_color: String,
+    val avg_color: String?,
     val src: Src
 ) : Serializable
 
