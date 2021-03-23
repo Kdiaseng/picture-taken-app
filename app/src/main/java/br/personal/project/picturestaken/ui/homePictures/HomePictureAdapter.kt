@@ -6,30 +6,28 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.ItemPhotoBinding
-import br.personal.project.picturestaken.ui.dataBinding.setUrl
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import java.lang.Exception
+
 
 class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>() {
 
     private var pictures = mutableListOf<Picture>()
     private var onClick: ((Picture, ImageView) -> Unit)? = null
 
-    fun addPictures(photos: MutableList<Picture>) {
-        if (pictures.size > 0) {
-            pictures.addAll(photos)
-        } else
-            pictures = photos
+    fun setPictures(photos: MutableList<Picture>) {
+        pictures = photos
         notifyDataSetChanged()
     }
+
+
+    fun addPictures(photos: MutableList<Picture>) {
+        pictures.addAll(photos)
+        notifyDataSetChanged()
+    }
+
 
     fun clear() {
         pictures.clear()
-        notifyDataSetChanged()
     }
-
-    fun hasItem() = pictures.size > 0
 
     fun setOnclick(action: (Picture, ImageView) -> Unit) {
         onClick = action

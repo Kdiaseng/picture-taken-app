@@ -48,21 +48,24 @@ class HomePicturesFragment : Fragment() {
         setupListener()
         setupObserver()
 
-        if(!adapterPicture.hasItem()){
-            adapterPicture.clear()
-            viewModel.getPicturesCurated()
-        }
+//        if(!adapterPicture.hasItem()){
+//            adapterPicture.clear()
+//            viewModel.getPicturesCurated()
+//        }
 
     }
 
     private fun setupObserver() {
         viewModel.photosLiveData.observe(viewLifecycleOwner) {
             binding.swipeRefresh.isRefreshing = false
+            it.run(adapterPicture::setPictures)
+        }
+
+        viewModel.photosUpdate.observe(viewLifecycleOwner){
             it.run(adapterPicture::addPictures)
         }
 
         viewModel.colorLiveData.observe(viewLifecycleOwner) {
-            adapterPicture.clear()
             setStateBottomSheet(BottomSheetBehavior.STATE_HIDDEN)
         }
 

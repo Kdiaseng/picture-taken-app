@@ -26,13 +26,16 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
     val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
+    private val _photosUpdate = MutableLiveData<MutableList<Picture>>()
+    val photosUpdate: LiveData<MutableList<Picture>> = _photosUpdate
+
 
     fun setColorSearch(color: String) {
         _colorLiveData.value = if (color.isNotEmpty()) color else null
         findPictureByName()
     }
 
-    fun findPictureByName(page: Int = 1) {
+    fun findPictureByName(page: Int = 1, isUpdate: Boolean = false) {
         _isCurated.value = false
         _queryLiveData.value?.let { query ->
             viewModelScope.launch {
@@ -42,7 +45,12 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                     is ResultData.Success -> {
                         _visibleLoading.value = false
                         _responsePicture.value = response.data
-                        _photosLiveData.value = response.data.photos
+                        if (isUpdate) {
+                            _photosUpdate.value = response.data.photos
+                        } else {
+                            _photosLiveData.value = response.data.photos
+
+                        }
                     }
                     is ResultData.Error -> {
                         _visibleLoading.value = false
@@ -61,7 +69,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                     if (isCurated) {
                         getPicturesCurated(page = nextPage)
                     } else {
-                        findPictureByName(page = nextPage)
+                        findPictureByName(page = nextPage, true)
                     }
                 }
             }
