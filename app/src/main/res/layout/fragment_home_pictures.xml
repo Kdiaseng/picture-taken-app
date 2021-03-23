@@ -35,6 +35,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
+               android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
@@ -78,6 +79,227 @@
                 app:adapter="@{adapterPhoto}"
                 tools:listitem="@layout/item_photo" />
         </LinearLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white_one"
+                app:behavior_hideable="true"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_red"
+                    app:cardElevation="10dp"
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`red`)}"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/red"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintEnd_toStartOf="@+id/card_yellow"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`orange`)}"
+                    android:id="@+id/card_orange"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/orange"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_green"
+                    app:layout_constraintTop_toBottomOf="@+id/card_blue" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_yellow"
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`yellow`)}"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/yellow"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_red"
+                    app:layout_constraintEnd_toStartOf="@+id/card_white"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_red"
+                    app:layout_constraintTop_toTopOf="@+id/card_red" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_green"
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`green`)}"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/green"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_orange"
+                    app:layout_constraintEnd_toStartOf="@+id/card_orange"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_turquoise"
+                    app:layout_constraintTop_toTopOf="@+id/card_orange" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_turquoise"
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`turquoise`)}"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/turquoise"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_green"
+                    app:layout_constraintEnd_toStartOf="@+id/card_green"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/card_green" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`blue`)}"
+                    android:id="@+id/card_blue"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardElevation="10dp"
+                    android:layout_marginTop="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/blue"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_violet"
+                    app:layout_constraintTop_toBottomOf="@+id/card_brown" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`violet`)}"
+                    android:id="@+id/card_violet"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardElevation="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/violet"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_blue"
+                    app:layout_constraintEnd_toStartOf="@+id/card_blue"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_pink"
+                    app:layout_constraintTop_toTopOf="@+id/card_blue" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`pink`)}"
+                    android:id="@+id/card_pink"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardElevation="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/pink"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_violet"
+                    app:layout_constraintEnd_toStartOf="@+id/card_violet"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/card_violet" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`brown`)}"
+                    android:id="@+id/card_brown"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardElevation="10dp"
+                    android:layout_marginTop="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/brown"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_black"
+                    app:layout_constraintTop_toBottomOf="@+id/card_white" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`black`)}"
+                    android:id="@+id/card_black"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/black"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_brown"
+                    app:layout_constraintEnd_toStartOf="@+id/card_brown"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_gray"
+                    app:layout_constraintTop_toTopOf="@+id/card_brown" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`gray`)}"
+                    android:id="@+id/card_gray"
+                    app:cardElevation="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/gray"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_black"
+                    app:layout_constraintEnd_toStartOf="@+id/card_black"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/card_black" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_white"
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(`white`)}"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    app:cardElevation="10dp"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="25dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_yellow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/card_yellow"
+                    app:layout_constraintTop_toTopOf="@+id/card_yellow" />
+
+                <Button
+                    android:onClick="@{() -> viewModelPicture.setColorSearch(``)}"
+                    android:id="@+id/button_none_color"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:text="@string/none_color_action"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_green" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
         <com.airbnb.lottie.LottieAnimationView

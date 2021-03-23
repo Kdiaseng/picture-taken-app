@@ -2,6 +2,7 @@ package br.personal.project.picturestaken.ui.homePictures
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import br.personal.project.picturestaken.BR.adapterPhoto
+import br.personal.project.picturestaken.R
 import br.personal.project.picturestaken.data.model.Picture
 import br.personal.project.picturestaken.databinding.FragmentHomePicturesBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +26,8 @@ class HomePicturesFragment : Fragment() {
     private lateinit var binding: FragmentHomePicturesBinding
     private val adapterPicture: HomePictureAdapter by inject()
     private val viewModel: HomePictureViewModel by viewModel()
+
+    private lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,15 +44,23 @@ class HomePicturesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bottomSheet = BottomSheetBehavior.from(binding.constraintLayout)
+        setStateBottomSheet(BottomSheetBehavior.STATE_HIDDEN)
         setupListener()
         setupObserver()
         viewModel.getPicturesCurated()
     }
 
     private fun setupObserver() {
-        viewModel.photosLiveData.observe(viewLifecycleOwner, {
+        viewModel.photosLiveData.observe(viewLifecycleOwner) {
             it.run(adapterPicture::addPictures)
-        })
+        }
+
+        viewModel.colorLiveData.observe(viewLifecycleOwner) {
+            adapterPicture.clear()
+            setStateBottomSheet(BottomSheetBehavior.STATE_HIDDEN)
+        }
+
     }
 
     private fun setupListener() {
@@ -57,10 +70,20 @@ class HomePicturesFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!binding.recyclerPhotos.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.refreshPictures()
+                    viewModel.nextPictures()
                 }
             }
         })
+
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.search_color -> {
+                    setStateBottomSheet(BottomSheetBehavior.STATE_EXPANDED)
+                    true
+                }
+                else -> false
+            }
+        }
 
         binding.searchImage.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -84,6 +107,10 @@ class HomePicturesFragment : Fragment() {
                 picture
             )
         findNavController().navigate(action, extras)
+    }
+
+    private fun setStateBottomSheet(state: Int) {
+        bottomSheet.state = state
     }
 
     private fun keyBoardHide() {

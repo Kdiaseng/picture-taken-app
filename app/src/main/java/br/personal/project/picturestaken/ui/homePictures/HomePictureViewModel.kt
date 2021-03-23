@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 class HomePictureViewModel(private val repository: PictureRepository) : ViewModel() {
 
     private val _responsePicture = MutableLiveData<ResponsePicture>()
-    private val _totalPage = MutableLiveData(0)
+
+    private val _colorLiveData = MutableLiveData<String?>()
+    val colorLiveData: LiveData<String?> = _colorLiveData
 
     private val _queryLiveData = MutableLiveData<String?>(null)
 
@@ -23,11 +25,18 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     private val _photosLiveData = MutableLiveData<MutableList<Picture>>()
     val photosLiveData: LiveData<MutableList<Picture>> = _photosLiveData
 
+
+    fun setColorSearch(color: String) {
+        _colorLiveData.value = if (color.isNotEmpty()) color else null
+        findPictureByName()
+    }
+
     fun findPictureByName(page: Int = 1) {
         _queryLiveData.value?.let { query ->
             viewModelScope.launch {
                 _visibleLoading.value = true
-                when (val response = repository.findPictureByName(query, page)) {
+                val color = _colorLiveData.value
+                when (val response = repository.findPictureByName(query, page, color)) {
                     is ResultData.Success -> {
                         _visibleLoading.value = false
                         _responsePicture.value = response.data
@@ -42,7 +51,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     }
 
 
-    fun refreshPictures() {
+    fun nextPictures() {
         _responsePicture.value?.let { response ->
             response.next_page?.let {
                 val nextPage = response.page + 1

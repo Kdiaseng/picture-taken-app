@@ -7,9 +7,9 @@ import java.lang.Exception
 
 class PictureRepository(private val pictureService: PictureService = RetrofitConfig.retrofitService) {
 
-    suspend fun findPictureByName(name: String, page: Int) =
+    suspend fun findPictureByName(name: String, page: Int, color: String?=null) =
         try {
-            val response = pictureService.getPictures(name, page)
+            val response = pictureService.getPictures(name, page, color)
             if (response.isSuccessful && response.body() != null) {
                 ResultData.Success(response.body()!!)
             } else {

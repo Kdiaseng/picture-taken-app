@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search"
+        android:id="@+id/search_color"
         android:contentDescription="@string/content_description_search"
         android:icon="@drawable/ic_baseline_color_lens_24"
         android:title="@string/search"

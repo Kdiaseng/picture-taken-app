@@ -5,4 +5,21 @@
     <string name="search">Pesquisar</string>
     <string name="content_description_search">busca por imagens</string>
     <string name="search_label">Pesquisar...</string>
+    <string name="none_color_action">sem cor</string>
+
+    <string-array name="colors">
+        <item>red</item>
+        <item>orange</item>
+        <item>yellow</item>
+        <item>green</item>
+        <item>turquoise</item>
+        <item>blue</item>
+        <item>violet</item>
+        <item>pink</item>
+        <item>brown</item>
+        <item>black</item>
+        <item>gray</item>
+        <item>white</item>
+    </string-array>
+
 </resources>

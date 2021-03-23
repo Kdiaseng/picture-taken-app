@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:duration="1000"
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start">
+        <OnSwipe
+            app:dragDirection="dragDown"
+            app:touchAnchorId="@+id/image_details"
+            app:touchAnchorSide="bottom" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/image_details"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <Constraint android:id="@+id/textView_author">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+
+        <Constraint android:id="@+id/textView_author_url">
+            <PropertySet android:alpha="1" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/image_details"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <Constraint android:id="@+id/textView_author">
+            <PropertySet android:alpha="0.5" />
+        </Constraint>
+
+        <Constraint android:id="@+id/textView_author_url">
+            <PropertySet android:alpha="0.5" />
+        </Constraint>
+    </ConstraintSet>
+
+
+</MotionScene>
