@@ -53,6 +53,7 @@ class HomePicturesFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.photosLiveData.observe(viewLifecycleOwner) {
+            binding.swipeRefresh.isRefreshing = false
             it.run(adapterPicture::addPictures)
         }
 
@@ -98,6 +99,20 @@ class HomePicturesFragment : Fragment() {
                 return false
             }
         })
+
+        binding.swipeRefresh.setOnRefreshListener {
+            clearSearchView()
+            adapterPicture.clear()
+            viewModel.getPicturesCurated()
+        }
+    }
+
+    private fun clearSearchView() {
+        binding.searchImage.apply {
+            setQuery("", false)
+            clearFocus()
+            isIconified = true
+        }
     }
 
     private fun showName(picture: Picture, imageView: ImageView) {

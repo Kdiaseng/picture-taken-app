@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class HomePictureViewModel(private val repository: PictureRepository) : ViewModel() {
 
     private val _responsePicture = MutableLiveData<ResponsePicture>()
+    private val _isCurated = MutableLiveData(false)
 
     private val _colorLiveData = MutableLiveData<String?>()
     val colorLiveData: LiveData<String?> = _colorLiveData
@@ -32,6 +33,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
     }
 
     fun findPictureByName(page: Int = 1) {
+        _isCurated.value = false
         _queryLiveData.value?.let { query ->
             viewModelScope.launch {
                 _visibleLoading.value = true
@@ -55,7 +57,13 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
         _responsePicture.value?.let { response ->
             response.next_page?.let {
                 val nextPage = response.page + 1
-                findPictureByName(nextPage)
+                _isCurated.value?.let { isCurated ->
+                    if (isCurated) {
+                        getPicturesCurated(page = nextPage)
+                    } else {
+                        findPictureByName(page = nextPage)
+                    }
+                }
             }
         }
     }
@@ -65,12 +73,15 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
         _queryLiveData.value = queryString
     }
 
-    fun getPicturesCurated(perPage: Int = 15) {
+    fun getPicturesCurated(perPage: Int = 15, page: Int = 1) {
+        _queryLiveData.value = null
+        _isCurated.value = true
         viewModelScope.launch {
             _visibleLoading.value = true
-            when (val response = repository.getPictureCurated(perPage)) {
+            when (val response = repository.getPictureCurated(perPage, page)) {
                 is ResultData.Success -> {
                     _visibleLoading.value = false
+                    _responsePicture.value = response.data
                     _photosLiveData.value = response.data.photos
                 }
                 is ResultData.Error -> {
