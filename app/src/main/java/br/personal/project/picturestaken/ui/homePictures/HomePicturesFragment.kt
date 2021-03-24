@@ -48,10 +48,10 @@ class HomePicturesFragment : Fragment() {
         setupListener()
         setupObserver()
 
-//        if(!adapterPicture.hasItem()){
-//            adapterPicture.clear()
-//            viewModel.getPicturesCurated()
-//        }
+        if(!adapterPicture.hasItem()){
+            adapterPicture.clear()
+            viewModel.getPicturesCurated()
+        }
 
     }
 

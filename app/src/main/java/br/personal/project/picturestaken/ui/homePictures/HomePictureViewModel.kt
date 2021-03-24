@@ -49,7 +49,6 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                             _photosUpdate.value = response.data.photos
                         } else {
                             _photosLiveData.value = response.data.photos
-
                         }
                     }
                     is ResultData.Error -> {
@@ -67,7 +66,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                 val nextPage = response.page + 1
                 _isCurated.value?.let { isCurated ->
                     if (isCurated) {
-                        getPicturesCurated(page = nextPage)
+                        getPicturesCurated(page = nextPage,isUpdate = true)
                     } else {
                         findPictureByName(page = nextPage, true)
                     }
@@ -81,7 +80,7 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
         _queryLiveData.value = queryString
     }
 
-    fun getPicturesCurated(perPage: Int = 15, page: Int = 1) {
+    fun getPicturesCurated(perPage: Int = 15, page: Int = 1, isUpdate: Boolean = false) {
         _queryLiveData.value = null
         _isCurated.value = true
         viewModelScope.launch {
@@ -90,7 +89,11 @@ class HomePictureViewModel(private val repository: PictureRepository) : ViewMode
                 is ResultData.Success -> {
                     _visibleLoading.value = false
                     _responsePicture.value = response.data
-                    _photosLiveData.value = response.data.photos
+                    if (isUpdate) {
+                        _photosUpdate.value = response.data.photos
+                    } else {
+                        _photosLiveData.value = response.data.photos
+                    }
                 }
                 is ResultData.Error -> {
                     _visibleLoading.value = false

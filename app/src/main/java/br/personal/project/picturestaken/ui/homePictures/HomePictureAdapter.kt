@@ -55,5 +55,7 @@ class HomePictureAdapter : RecyclerView.Adapter<HomePictureAdapter.ViewHolder>()
     }
 
     override fun getItemCount() = pictures.size
+    fun hasItem() = pictures.size > 0
+
 
 }
